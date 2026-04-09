@@ -15,7 +15,7 @@ const { article } = Astro.props;
 const { Content } = await render(article);
 ---
 
-<Layout>
+<Layout title={`${article.data.title} | janskiba.dev`} description={article.data.summary}>
   <div class="py-12 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto">
       <!-- Back link -->

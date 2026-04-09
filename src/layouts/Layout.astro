@@ -2,6 +2,16 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "janskiba.dev",
+  description = "Personal blog about frontend development, Angular, TypeScript and web engineering.",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -12,12 +22,9 @@ import Footer from "../components/Footer.astro";
     <meta name="color-scheme" content="dark" />
     <meta name="supported-color-schemes" content="dark" />
     <meta name="theme-color" content="#182232" />
-    <meta
-      name="description"
-      content="Personal blog about frontend development, Angular, TypeScript and web engineering."
-    />
+    <meta name="description" content={description} />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <title>janskiba.dev</title>
+    <title>{title}</title>
   </head>
   <body
     class="min-h-screen flex flex-col w-full bg-linear-to-br from-gray-900 via-gray-800 to-gray-900"
