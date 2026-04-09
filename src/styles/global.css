@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+body {
+  background-color: #182232;
+}
+
+.menu-open .burger-bar-1 {
+  transform: translateY(9px) rotate(45deg);
+}
+.menu-open .burger-bar-2 {
+  opacity: 0;
+}
+.menu-open .burger-bar-3 {
+  transform: translateY(-9px) rotate(-45deg);
+}
