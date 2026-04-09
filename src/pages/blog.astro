@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import ArrowLink from "../components/ArrowLink.astro";
 
 const allArticles = await getCollection("articles");
 // Sort by publishedAt descending (newest first)
@@ -85,23 +86,7 @@ const articles = allArticles
                 <h2 class="text-2xl font-bold  text-gray-100 mb-6 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r group-hover:from-blue-400 group-hover:to-purple-400 transition-all duration-300">
                   {article.title}
                 </h2>
-                <span class="text-blue-400 hover:text-blue-300 group/arrow inline-flex items-center gap-2 font-medium transition-colors duration-200">
-                  <span>Read more</span>
-                  <svg
-                    class="w-4 h-4 transition-transform duration-200 group-hover/arrow:translate-x-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </svg>
-                </span>
+                <ArrowLink text="Read more" />
               </article>
             </a>
           ))

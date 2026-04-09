@@ -1,0 +1,119 @@
+---
+const pathname = Astro.url.pathname;
+
+const navLinks = [
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "mailto:jan.skiba.poczta@proton.me", label: "Contact" },
+];
+
+function navLinkClass(href: string) {
+  const isActive =
+    pathname === href ||
+    (href.startsWith("/") && href !== "/" && pathname.startsWith(href));
+  return [
+    "inline-flex items-center rounded-xl px-4 py-2 text-sm font-medium transition-all duration-100",
+    "bg-gray-800/30 backdrop-blur-sm border border-white/10 shadow-sm",
+    "text-gray-200!",
+    "hover:border-blue-500/30 hover:text-blue-200 hover:shadow-blue-500/20 hover:shadow-sm",
+    "focus:outline-none focus:ring-2 focus:ring-blue-500/50",
+    isActive ? "bg-white/10 border-blue-500/50 text-blue-100! shadow-blue-500/20" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+---
+
+<header
+  class="sticky top-0 border-t border-gray-800/70 bg-gray-950/40 backdrop-blur-xl z-20"
+>
+  <div class="px-5 py-3">
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" aria-label="Go to homepage">
+        <div
+          class="relative inline-flex items-center rounded-2xl border border-white/10 bg-gray-900/20 px-4 py-2 backdrop-blur-sm shadow-lg"
+        >
+          <span
+            class="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 transition-all duration-300"
+          ></span>
+          <span class="relative pointer-events-none text-lg font-bold text-gray-100"
+            >janskiba.dev</span
+          >
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav aria-label="Menu" class="hidden sm:block">
+        <ul class="flex flex-wrap items-center gap-3">
+          {
+            navLinks.map((link) => (
+              <li>
+                <a href={link.href} class={navLinkClass(link.href)}>
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <!-- Mobile Hamburger Button -->
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        class="sm:hidden inline-flex items-center justify-center rounded-xl border border-white/10 bg-gray-800/30 px-3 py-2 text-gray-200 shadow-sm backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="sr-only">Toggle menu</span>
+        <div class="relative h-5 w-6">
+          <span
+            class="burger-bar-1 absolute left-0 top-0 block h-0.5 w-6 bg-current transition-[transform,opacity] duration-200"
+          ></span>
+          <span
+            class="burger-bar-2 absolute left-0 top-2.25 block h-0.5 w-6 bg-current transition-[transform,opacity] duration-200"
+          ></span>
+          <span
+            class="burger-bar-3 absolute left-0 top-4.5 block h-0.5 w-6 bg-current transition-[transform,opacity] duration-200"
+          ></span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="sm:hidden hidden mt-3">
+      <nav aria-label="Mobile menu">
+        <ul
+          class="flex flex-col gap-2 rounded-2xl border border-white/10 bg-gray-900/30 p-2 backdrop-blur-sm"
+        >
+          {
+            navLinks.map((link) => (
+              <li>
+                <a href={link.href} class={navLinkClass(link.href)}>
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById(
+    "mobile-menu-btn"
+  ) as HTMLButtonElement | null;
+  const menu = document.getElementById("mobile-menu");
+
+  btn?.addEventListener("click", () => {
+    const isOpen = btn.getAttribute("aria-expanded") === "true";
+    const nextOpen = !isOpen;
+    btn.setAttribute("aria-expanded", String(nextOpen));
+    menu?.classList.toggle("hidden", !nextOpen);
+    btn.classList.toggle("menu-open", nextOpen);
+  });
+</script>

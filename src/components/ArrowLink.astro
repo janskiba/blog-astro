@@ -1,0 +1,94 @@
+---
+interface Props {
+  text: string;
+  href?: string;
+  direction?: "forward" | "backward";
+  class?: string;
+}
+
+const { text, href, direction = "forward", class: className } = Astro.props;
+const isBackward = direction === "backward";
+
+const cls = [
+  "text-blue-400 hover:text-blue-300 group inline-flex items-center gap-2 font-medium transition-colors duration-200",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+{
+  href ? (
+    <a href={href} class={cls}>
+      {isBackward && (
+        <svg
+          class="w-4 h-4 -scale-x-100 transition-transform duration-200 group-hover:-translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 7l5 5m0 0l-5 5m5-5H6"
+          />
+        </svg>
+      )}
+      <span>{text}</span>
+      {!isBackward && (
+        <svg
+          class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 7l5 5m0 0l-5 5m5-5H6"
+          />
+        </svg>
+      )}
+    </a>
+  ) : (
+    <span class={cls}>
+      {isBackward && (
+        <svg
+          class="w-4 h-4 -scale-x-100 transition-transform duration-200 group-hover:-translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 7l5 5m0 0l-5 5m5-5H6"
+          />
+        </svg>
+      )}
+      <span>{text}</span>
+      {!isBackward && (
+        <svg
+          class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 7l5 5m0 0l-5 5m5-5H6"
+          />
+        </svg>
+      )}
+    </span>
+  )
+}
