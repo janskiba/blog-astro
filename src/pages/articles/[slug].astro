@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+---
+
+<Layout>
+  <div class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto">
+      <!-- Back link -->
+      <a
+        href="/blog"
+        class="text-blue-400 hover:text-blue-300 group inline-flex items-center gap-2 font-medium transition-colors duration-200"
+      >
+        <svg
+          class="w-4 h-4 -scale-x-100 transition-transform duration-200 group-hover:-translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+        </svg>
+        <span>Back to articles</span>
+      </a>
+
+      <!-- Article card -->
+      <div
+        class="mt-6 relative bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 sm:p-8"
+      >
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-100">
+          {article.data.title}
+        </h1>
+        <div class="mt-8 h-px bg-gray-700/60"></div>
+        <div
+          class="prose prose-invert prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-700/60 prose-code:text-blue-300 prose-headings:text-gray-100 prose-p:text-gray-300 prose-li:text-gray-300 prose-strong:text-gray-100 prose-a:text-blue-400 hover:prose-a:text-blue-300 prose-table:text-gray-300 prose-th:text-gray-200 max-w-none mt-8"
+        >
+          <Content />
+        </div>
+      </div>
+
+      <!-- Back link bottom -->
+      <a
+        href="/blog"
+        class="my-6 text-blue-400 hover:text-blue-300 group inline-flex items-center gap-2 font-medium transition-colors duration-200"
+      >
+        <svg
+          class="w-4 h-4 -scale-x-100 transition-transform duration-200 group-hover:-translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+        </svg>
+        <span>Back to articles</span>
+      </a>
+    </div>
+  </div>
+</Layout>

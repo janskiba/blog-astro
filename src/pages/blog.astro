@@ -1,0 +1,133 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+
+const allArticles = await getCollection("articles");
+// Sort by publishedAt descending (newest first)
+const articles = allArticles
+  .sort(
+    (a, b) =>
+      new Date(b.data.publishedAt).getTime() -
+      new Date(a.data.publishedAt).getTime()
+  )
+  .map((a) => ({
+    slug: a.id,
+    title: a.data.title,
+    summary: a.data.summary,
+  }));
+---
+
+<Layout>
+  <div class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- Search bar -->
+      <div class="relative mb-8 group">
+        <div
+          class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10"
+        >
+          <svg
+            class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Search for articles..."
+          class="w-full pl-12 pr-4 py-4 bg-gray-800/50 border border-gray-700 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/70"
+        />
+      </div>
+
+      <!-- Empty state -->
+      <div id="empty-state" class="text-center py-16 hidden">
+        <div
+          class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-800/50 mb-4"
+        >
+          <svg
+            class="w-8 h-8 text-gray-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+        </div>
+        <p class="text-gray-400 text-lg">No results found.</p>
+        <p class="text-gray-600 text-sm mt-2">Try adjusting your search terms</p>
+      </div>
+
+      <!-- Article list -->
+      <div id="article-list" class="space-y-6">
+        {
+          articles.map((article) => (
+            <a
+              href={`/articles/${article.slug}`}
+              data-title={article.title.toLowerCase()}
+              data-summary={article.summary.toLowerCase()}
+              class="article-card block group relative bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1"
+            >
+              <div class="absolute inset-0 bg-linear-to-r from-blue-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-pink-500/5 rounded-2xl transition-all duration-300" />
+              <article class="relative">
+                <h2 class="text-2xl font-bold  text-gray-100 mb-6 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r group-hover:from-blue-400 group-hover:to-purple-400 transition-all duration-300">
+                  {article.title}
+                </h2>
+                <span class="text-blue-400 hover:text-blue-300 group/arrow inline-flex items-center gap-2 font-medium transition-colors duration-200">
+                  <span>Read more</span>
+                  <svg
+                    class="w-4 h-4 transition-transform duration-200 group-hover/arrow:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </span>
+              </article>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const input = document.getElementById("search-input") as HTMLInputElement;
+  const cards = document.querySelectorAll<HTMLElement>(".article-card");
+  const emptyState = document.getElementById("empty-state")!;
+
+  input?.addEventListener("input", () => {
+    const query = input.value.toLowerCase().trim();
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const title = card.dataset.title ?? "";
+      const summary = card.dataset.summary ?? "";
+      const matches = !query || title.includes(query) || summary.includes(query);
+      card.classList.toggle("hidden", !matches);
+      if (matches) visibleCount++;
+    });
+
+    emptyState.classList.toggle("hidden", visibleCount > 0);
+  });
+</script>
