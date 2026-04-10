@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ArrowLink from "../components/ArrowLink.astro";
+import aboutMeImage from "../assets/about-me.jpeg";
 
 const skills: Record<string, string[]> = {
   "Frameworks & libraries": [
@@ -19,7 +20,10 @@ const skills: Record<string, string[]> = {
 };
 ---
 
-<Layout title="About me | janskiba.dev" description="Frontend developer focused on Angular, TypeScript and modern web engineering.">
+<Layout
+  title="About me | janskiba.dev"
+  description="Frontend developer focused on Angular, TypeScript and modern web engineering."
+>
   <section class="py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
       <div
@@ -40,10 +44,9 @@ const skills: Record<string, string[]> = {
               class="h-24 w-24 sm:h-28 sm:w-28 rounded-2xl overflow-hidden border border-gray-700/60 bg-gray-800/40"
             >
               <img
-                src="../assets/about-me.jpg"
+                src={aboutMeImage.src}
                 alt="Profile photo"
                 class="h-full w-full object-cover"
-                loading="lazy"
               />
             </div>
           </div>
@@ -53,10 +56,10 @@ const skills: Record<string, string[]> = {
             <div>
               <h2 class="text-2xl font-bold text-gray-100">About me</h2>
               <p class="mt-2 text-gray-300 leading-relaxed">
-                I'm a software developer focused on building modern, maintainable
-                web applications—mostly in the Angular ecosystem. I enjoy turning
-                complex requirements into clean UI, solid architecture, and
-                reliable delivery pipelines.
+                I'm a software developer focused on building modern,
+                maintainable web applications—mostly in the Angular ecosystem. I
+                enjoy turning complex requirements into clean UI, solid
+                architecture, and reliable delivery pipelines.
               </p>
             </div>
 
