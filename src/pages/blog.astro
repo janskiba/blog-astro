@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import ArrowLink from "../components/ArrowLink.astro";
 
+const base = import.meta.env.BASE_URL;
+
 const allArticles = await getCollection("articles");
 // Sort by publishedAt descending (newest first)
 const articles = allArticles
@@ -76,7 +78,7 @@ const articles = allArticles
         {
           articles.map((article) => (
             <a
-              href={`/articles/${article.slug}`}
+              href={`${base}articles/${article.slug}`}
               data-title={article.title.toLowerCase()}
               data-summary={article.summary.toLowerCase()}
               class="article-card block group relative bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1"

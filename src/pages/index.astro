@@ -3,6 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import ArrowLink from "../components/ArrowLink.astro";
 import aboutMeImage from "../assets/about-me.jpeg";
 
+const base = import.meta.env.BASE_URL;
+
 const skills: Record<string, string[]> = {
   "Frameworks & libraries": [
     "Angular",
@@ -102,7 +104,7 @@ const skills: Record<string, string[]> = {
 
             <!-- CTA link -->
             <div class="pt-2">
-              <ArrowLink href="/blog" text="Read my articles" />
+              <ArrowLink href={`${base}blog`} text="Read my articles" />
             </div>
           </div>
         </div>

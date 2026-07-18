@@ -1,5 +1,5 @@
 ---
-
+const base = import.meta.env.BASE_URL;
 ---
 
 <footer class="mt-16 border-t border-gray-800/70 bg-gray-950/40">
@@ -8,7 +8,7 @@
       <!-- Left: logo + tagline + social links -->
       <div>
         <a
-          href="/"
+          href={base}
           class="inline-flex items-center gap-2 group"
           aria-label="Go to homepage"
         >
@@ -84,12 +84,12 @@
         <h3 class="text-sm font-semibold text-gray-200">Navigation</h3>
         <ul class="mt-3 space-y-2 text-sm">
           <li>
-            <a href="/blog" class="text-gray-400 hover:text-gray-100 transition"
+            <a href={`${base}blog`} class="text-gray-400 hover:text-gray-100 transition"
               >Blog</a
             >
           </li>
           <li>
-            <a href="/" class="text-gray-400 hover:text-gray-100 transition"
+            <a href={base} class="text-gray-400 hover:text-gray-100 transition"
               >About</a
             >
           </li>

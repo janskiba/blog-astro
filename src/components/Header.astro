@@ -1,16 +1,17 @@
 ---
 const pathname = Astro.url.pathname;
+const base = import.meta.env.BASE_URL;
 
 const navLinks = [
-  { href: "/", label: "About" },
-  { href: "/blog", label: "Blog" },
+  { href: base, label: "About" },
+  { href: `${base}blog`, label: "Blog" },
   { href: "mailto:jan.skiba.poczta@proton.me", label: "Contact" },
 ];
 
 function navLinkClass(href: string) {
   const isActive =
     pathname === href ||
-    (href.startsWith("/") && href !== "/" && pathname.startsWith(href));
+    (href.startsWith("/") && href !== base && pathname.startsWith(href));
   return [
     "inline-flex items-center rounded-xl px-4 py-2 text-sm font-medium transition-all duration-100",
     "bg-gray-800/30 backdrop-blur-sm border border-white/10 shadow-sm",
@@ -32,7 +33,7 @@ function navLinkClass(href: string) {
   <div class="px-5 py-3">
     <div class="flex items-center justify-between">
       <!-- Logo -->
-      <a href="/" aria-label="Go to homepage">
+      <a href={base} aria-label="Go to homepage">
         <div
           class="relative inline-flex items-center rounded-2xl border border-white/10 bg-gray-900/20 px-4 py-2 backdrop-blur-sm shadow-lg"
         >

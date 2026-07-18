@@ -9,7 +9,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://janskiba.dev',
   outDir: 'docs',
-  base: '/blog-astro',
+  base: '/blog-astro/',
   vite: {
     plugins: [tailwindcss()]
   },
