@@ -16,11 +16,18 @@ const { Content } = await render(article);
 const base = import.meta.env.BASE_URL;
 ---
 
-<Layout title={`${article.data.title} | janskiba.dev`} description={article.data.summary}>
+<Layout
+  title={`${article.data.title} | janskiba.dev`}
+  description={article.data.summary}
+>
   <div class="py-12 px-4 sm:px-6 lg:px-8">
     <div class="mx-auto">
       <!-- Back link -->
-      <ArrowLink href={`${base}blog`} text="Back to articles" direction="backward" />
+      <ArrowLink
+        href={`${base}blog`}
+        text="Back to articles"
+        direction="backward"
+      />
 
       <!-- Article card -->
       <div
@@ -38,7 +45,12 @@ const base = import.meta.env.BASE_URL;
       </div>
 
       <!-- Back link bottom -->
-      <ArrowLink href={`${base}blog`} text="Back to articles" direction="backward" class="my-6" />
+      <ArrowLink
+        href={`${base}blog`}
+        text="Back to articles"
+        direction="backward"
+        class="my-6"
+      />
     </div>
   </div>
 </Layout>

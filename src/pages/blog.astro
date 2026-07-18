@@ -11,7 +11,7 @@ const articles = allArticles
   .sort(
     (a, b) =>
       new Date(b.data.publishedAt).getTime() -
-      new Date(a.data.publishedAt).getTime()
+      new Date(a.data.publishedAt).getTime(),
   )
   .map((a) => ({
     slug: a.id,
@@ -20,10 +20,12 @@ const articles = allArticles
   }));
 ---
 
-<Layout title="Blog | janskiba.dev" description="Articles about Angular, TypeScript, testing and frontend engineering.">
+<Layout
+  title="Blog | janskiba.dev"
+  description="Articles about Angular, TypeScript, testing and frontend engineering."
+>
   <div class="py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
-
       <!-- Search bar -->
       <div class="relative mb-8 group">
         <div
@@ -70,7 +72,9 @@ const articles = allArticles
           </svg>
         </div>
         <p class="text-gray-400 text-lg">No results found.</p>
-        <p class="text-gray-600 text-sm mt-2">Try adjusting your search terms</p>
+        <p class="text-gray-600 text-sm mt-2">
+          Try adjusting your search terms
+        </p>
       </div>
 
       <!-- Article list -->
@@ -110,7 +114,8 @@ const articles = allArticles
     cards.forEach((card) => {
       const title = card.dataset.title ?? "";
       const summary = card.dataset.summary ?? "";
-      const matches = !query || title.includes(query) || summary.includes(query);
+      const matches =
+        !query || title.includes(query) || summary.includes(query);
       card.classList.toggle("hidden", !matches);
       if (matches) visibleCount++;
     });
